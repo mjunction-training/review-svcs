@@ -1,2 +1,3 @@
-# product-catalog
-Product Catalog Service
+# review-svcs
+Product Review Service
+        
