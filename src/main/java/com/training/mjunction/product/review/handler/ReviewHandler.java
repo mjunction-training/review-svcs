@@ -31,7 +31,7 @@ public class ReviewHandler {
 
 	public Mono<ServerResponse> findProduct(final ServerRequest request) {
 
-		log.info("Retrieveing product");
+		log.info("Get product");
 
 		// parse query parameter product id
 		final String productId = request.pathVariable("productId");
@@ -51,7 +51,7 @@ public class ReviewHandler {
 
 	public Mono<ServerResponse> getProducts(final ServerRequest request) {
 
-		log.info("Retrieveing products");
+		log.info("Get products");
 
 		// parse query parameter product name
 		final String productName = request.queryParam("productName").orElseGet(() -> null);

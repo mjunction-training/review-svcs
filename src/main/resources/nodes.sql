@@ -28,5 +28,23 @@ CREATE
  (ToBPencil)-[:REVIEWED {rating: 7, review: 'Good One'}]->(Alex),
  (ToBPencil)-[:REVIEWED {rating: 9, review: 'Best for ever'}]->(Sanjib),
  (Crayons)-[:REVIEWED {rating: 5, review: 'Average'}]->(Sanjib),
- (Classmate)-[:REVIEWED {rating: 5, review: 'Average Product'}]->(Anal)
+ (Classmate)-[:REVIEWED {rating: 5, review: 'Average Product'}]->(Anal),
+ 
+ (BallPen)-[:RECOMMENDS]->(ToBPencil),
+ (BallPen)-[:RECOMMENDS]->(HBPencil),
+ (BallPen)-[:RECOMMENDS]->(DomsCrans),
+ (ToBPencil)-[:RECOMMENDS]->(DomsCrans),
+ (ToBPencil)-[:RECOMMENDS]->(BallPen),
+ (HBPencil)-[:RECOMMENDS]->(BallPen),
+ (HBPencil)-[:RECOMMENDS]->(Classmate),
+ (HBPencil)-[:RECOMMENDS]->(ToBPencil),
+ (DomsCrans)-[:RECOMMENDS]->(BallPen),
+ (DomsCrans)-[:RECOMMENDS]->(Classmate),
+ (DomsCrans)-[:RECOMMENDS]->(Crayons),
+ (Crayons)-[:RECOMMENDS]->(BallPen),
+ (Crayons)-[:RECOMMENDS]->(DomsCrans),
+ (Classmate)-[:RECOMMENDS]->(Crayons),
+ (Classmate)-[:RECOMMENDS]->(BallPen),
+ (Classmate)-[:RECOMMENDS]->(DomsCrans)
 ;
+        
