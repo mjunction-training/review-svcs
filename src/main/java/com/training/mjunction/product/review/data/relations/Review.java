@@ -12,15 +12,8 @@ import com.training.mjunction.product.review.data.nodes.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-/**
- * @author Sundar Gsv
- * @Date 06/11/18
- * @ClassDescription
- */
 @Data
-@ToString
 @NoArgsConstructor
 @RelationshipEntity(type = "REVIEWED")
 public class Review {
@@ -30,7 +23,7 @@ public class Review {
 	private Long id;
 
 	@Property("rating")
-	private String rating;
+	private Integer rating;
 
 	@Property("review")
 	private String review;
@@ -40,5 +33,56 @@ public class Review {
 
 	@EndNode
 	private User user;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Review other = (Review) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (product == null) {
+			if (other.product != null) {
+				return false;
+			}
+		} else if (!product.equals(other.product)) {
+			return false;
+		}
+		if (rating == null) {
+			if (other.rating != null) {
+				return false;
+			}
+		} else if (!rating.equals(other.rating)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (product == null ? 0 : product.hashCode());
+		result = prime * result + (rating == null ? 0 : rating.hashCode());
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", rating=" + rating + ", review=" + review + "]";
+	}
 
 }

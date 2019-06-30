@@ -20,12 +20,12 @@ public class RoutingConfiguration {
 
 	@Bean
 	public RouterFunction<ServerResponse> monoRouterFunction(final ReviewHandler reviewHandler) {
-		return route(GET("/api/v1/products").and(accept(MediaType.APPLICATION_JSON)), reviewHandler::getProduct)
+		return route(GET("/api/v1/products").and(accept(MediaType.APPLICATION_JSON)), reviewHandler::getProducts)
 				.andRoute(GET("/api/v1/products/{productId}").and(accept(MediaType.APPLICATION_JSON)),
-						reviewHandler::getProduct)
+						reviewHandler::findProduct)
 				.andRoute(GET("/api/v1/users").and(accept(MediaType.APPLICATION_JSON)), reviewHandler::getUsers)
 				.andRoute(GET("/api/v1/users/{userId}").and(accept(MediaType.APPLICATION_JSON)),
-						reviewHandler::getUsers)
+						reviewHandler::findUser)
 				.andRoute(POST("/api/v1/products").and(accept(MediaType.APPLICATION_JSON)), reviewHandler::postProduct)
 				.andRoute(PUT("/api/v1/products/{id}").and(accept(MediaType.APPLICATION_JSON)),
 						reviewHandler::putProduct)

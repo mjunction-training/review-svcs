@@ -13,15 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-/**
- * @author Sundar Gsv
- * @Date 06/11/18
- * @ClassDescription
- */
 @Data
-@ToString
 @NoArgsConstructor
 @NodeEntity
 public class User {
@@ -40,5 +33,48 @@ public class User {
 	@JsonIgnore
 	@Relationship(type = "REVIEWED", direction = Relationship.INCOMING)
 	private List<Product> products;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (name == null ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
+	}
 
 }

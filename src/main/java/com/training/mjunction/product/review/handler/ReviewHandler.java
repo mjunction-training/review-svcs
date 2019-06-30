@@ -29,29 +29,38 @@ public class ReviewHandler {
 	@Autowired
 	private UserRepository userRepository;
 
-	public Mono<ServerResponse> getProduct(final ServerRequest request) {
+	public Mono<ServerResponse> findProduct(final ServerRequest request) {
 
-		log.info("Retrieveing products");
+		log.info("Retrieveing product");
 
 		// parse query parameter product id
 		final String productId = request.pathVariable("productId");
-
-		// parse query parameter product name
-		final String productName = request.queryParam("productName").orElseGet(() -> null);
-
-		if (isBlank(productId) && isBlank(productName)) {
-
-			// fetch all products from repository
-			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-					.body(Flux.fromIterable(productRepository.findAll()), Product.class);
-
-		}
 
 		if (isNotBlank(productId)) {
 
 			// fetch product from repository by product id, build response
 			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
 					.body(Mono.fromSupplier(() -> productRepository.findByProductId(productId, 500)), Product.class);
+
+		}
+
+		// build not found response
+		return ServerResponse.notFound().build();
+
+	}
+
+	public Mono<ServerResponse> getProducts(final ServerRequest request) {
+
+		log.info("Retrieveing products");
+
+		// parse query parameter product name
+		final String productName = request.queryParam("productName").orElseGet(() -> null);
+
+		if (isBlank(productName)) {
+
+			// fetch all products from repository
+			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+					.body(Flux.fromIterable(productRepository.findAll()), Product.class);
 
 		}
 
@@ -68,23 +77,12 @@ public class ReviewHandler {
 
 	}
 
-	public Mono<ServerResponse> getUsers(final ServerRequest request) {
+	public Mono<ServerResponse> findUser(final ServerRequest request) {
 
-		log.info("Retrieveing users");
+		log.info("Retrieveing user");
 
 		// parse path-variable
 		final String userId = request.pathVariable("userId");
-
-		// parse query parameter product name
-		final String userName = request.queryParam("userName").orElseGet(() -> null);
-
-		if (isBlank(userId) && isBlank(userName)) {
-
-			// fetch all products from repository
-			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-					.body(Flux.fromIterable(userRepository.findAll()), User.class);
-
-		}
 
 		if (isNotBlank(userId)) {
 
@@ -92,6 +90,26 @@ public class ReviewHandler {
 			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
 					Mono.fromSupplier(() -> userRepository.findById(Long.valueOf(userId)).orElseGet(() -> null)),
 					User.class);
+
+		}
+
+		// build not found response
+		return ServerResponse.notFound().build();
+
+	}
+
+	public Mono<ServerResponse> getUsers(final ServerRequest request) {
+
+		log.info("Retrieveing users");
+
+		// parse query parameter product name
+		final String userName = request.queryParam("userName").orElseGet(() -> null);
+
+		if (isBlank(userName)) {
+
+			// fetch all products from repository
+			return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+					.body(Flux.fromIterable(userRepository.findAll()), User.class);
 
 		}
 
