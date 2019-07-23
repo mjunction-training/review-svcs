@@ -7,6 +7,10 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.training.mjunction.product.review.data.nodes.Product;
 import com.training.mjunction.product.review.data.nodes.User;
 
@@ -16,22 +20,29 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @RelationshipEntity(type = "REVIEWED")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "id", "rating", "review", "user" })
 public class Review {
 
 	@Id
 	@GeneratedValue
+	@JsonProperty("id")
 	private Long id;
 
 	@Property("rating")
+	@JsonProperty("rating")
 	private Integer rating;
 
 	@Property("review")
+	@JsonProperty("review")
 	private String review;
 
 	@StartNode
+	@JsonIgnore
 	private Product product;
 
 	@EndNode
+	@JsonProperty("user")
 	private User user;
 
 	@Override

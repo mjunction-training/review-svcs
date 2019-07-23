@@ -10,29 +10,38 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.training.mjunction.product.review.data.relations.Review;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data()
+@Data
 @NoArgsConstructor
 @NodeEntity
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "id", "name", "productId", "reviewes" })
 public class Product {
 
 	@Id
 	@GeneratedValue
+	@JsonProperty("id")
 	private Long id;
 
 	@Property("name")
 	@Index(unique = true)
+	@JsonProperty("name")
 	private String name;
 
 	@Property("productId")
 	@Index(unique = true)
+	@JsonProperty("productId")
 	private String productId;
 
 	@JsonIgnoreProperties("product")
+	@JsonProperty("reviewes")
 	@Relationship(type = "REVIEWED", direction = Relationship.OUTGOING)
 	private List<Review> reviewes;
 

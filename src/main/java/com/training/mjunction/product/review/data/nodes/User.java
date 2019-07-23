@@ -10,6 +10,9 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,17 +20,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NodeEntity
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "id", "name", "age" })
 public class User {
 
 	@Id
 	@GeneratedValue
+	@JsonProperty("id")
 	private Long id;
 
 	@Property("name")
 	@Index(unique = true)
+	@JsonProperty("name")
 	private String name;
 
 	@Property("age")
+	@JsonProperty("age")
 	private Integer age;
 
 	@JsonIgnore
